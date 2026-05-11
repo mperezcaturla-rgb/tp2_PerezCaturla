@@ -66,6 +66,6 @@ def convertir_ascii(ruta_imagen:str, ancho:int):
     matriz = convertir_matriz(img) #PASO 3, CONVIERTO A ARRAY DE NUMPY
     matriz = normalizar(matriz) #PASO 4, NORMALIZAMOS
     lista = mapeo(matriz) #PASO 5, HACEMOS LA LISTA DE STRINGS
-    ascii_art = "\n".join(lista)  # CONSTRUYO STRING FINAL
+    ascii_art = "\n".join(lista)  # CONSTRUYO STRING FINAL CON SALTOS DE LINEA
 
     return ascii_art
