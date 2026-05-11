@@ -53,7 +53,10 @@ def mapeo(matriz:np.ndarray):
         lista.append(linea)
 
     return lista
-              
+
+def guardar_ascii_art(ascii_art, ruta_salida):
+    with open(ruta_salida, 'w') as f:
+        f.write(ascii_art)
 
 def convertir_ascii(ruta_imagen:str, ancho:int):
 
