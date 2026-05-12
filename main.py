@@ -4,7 +4,7 @@ import os
 
 imagen = input("Ingrese la ruta de la imagen: ")
 if not os.path.exists(imagen):
-    print("Error: no se encontró la imagen.")
+    print("No se encontró la imagen. Por favor, verifique la ruta e intente nuevamente.")
     exit()
 
 while True:
@@ -19,6 +19,9 @@ if metodo == 'ascii':
     ancho = input("Ingrese el ancho de imagen deseado(por default sera 100): ")
     if ancho == "": 
         ancho = 100
+    elif int(ancho) <= 0: 
+        print("El ancho de la imagen ASCII debe ser un número positivo.")
+        exit()
     else: 
         ancho = int(ancho)
     
