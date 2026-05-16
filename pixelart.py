@@ -28,14 +28,12 @@ def calcular_color_promedio(bloque):
     suma_r = np.sum(bloque[:, :, 0])
     suma_g = np.sum(bloque[:, :, 1])
     suma_b = np.sum(bloque[:, :, 2])
-    
     #cantidad de pixeles en el bloque
     cantidad_pixeles = bloque.shape[0] * bloque.shape[1]
     #calcular promedios
     prom_r = int(suma_r / cantidad_pixeles)
     prom_g = int(suma_g / cantidad_pixeles)
     prom_b = int(suma_b / cantidad_pixeles)
-    
     return np.array([prom_r, prom_g, prom_b])
 
 
@@ -59,3 +57,33 @@ def redondear_color(color, paleta):
         color_final.append(paleta[idx_minimo])
     
     return np.array(color_final)
+
+
+def pintar_bloque(img_array, x, y, tam_bloque, color):
+    """Pinta todo el bloque con el color"""
+    alto, ancho = img_array.shape[:2]
+    x_fin = min(x + tam_bloque, ancho)
+    y_fin = min(y + tam_bloque, alto)
+    #asigno el color al bloque completo 
+    img_array[y:y_fin, x:x_fin] = color
+
+
+def aplicar_pixel_art(ruta_imagen: str, tam_bloque: int, niveles_color: int):
+    """Aplica el filtro de Pixel Art a una imagen y la devuelve."""
+    
+    #abre la imagen
+    imagen = Image.open(ruta_imagen)
+    img_array = np.array(imagen)
+    alto, ancho = img_array.shape[:2]
+    paleta = crear_paleta(niveles_color) 
+    #recorre por bloques
+    for y in range(0, alto, tam_bloque):
+        for x in range(0, ancho, tam_bloque):
+            bloque = extraer_bloque(img_array, x, y, tam_bloque)
+            color_prom = calcular_color_promedio(bloque)
+            color_final = redondear_color(color_prom, paleta)
+            pintar_bloque(img_array, x, y, tam_bloque, color_final)
+     
+    #convierto de vuelta a imagen 
+    resultado = Image.fromarray(img_array)
+    return resultado
