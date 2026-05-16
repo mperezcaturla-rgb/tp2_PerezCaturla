@@ -17,23 +17,20 @@ def extraer_bloque(matriz_imagen: np.ndarray, x:int, y:int, tamaño_bloque:int) 
     alto=len(matriz_imagen)
     ancho=len(matriz_imagen[0])
     #calcula los limites sin salirse de la foto
-    x_fin=min(y+tamaño_bloque, ancho)
-    y_fin=min(x+tamaño_bloque, alto)
+    x_fin=min(x+tamaño_bloque, ancho)
+    y_fin=min(y+tamaño_bloque, alto)
     return matriz_imagen[y:y_fin, x:x_fin]
 
 
 def calcular_color_promedio(bloque):
     """Calcula el promedio de RGB del bloque"""
-    #usa sum de numpy para cada canal
-    suma_r = np.sum(bloque[:, :, 0])
-    suma_g = np.sum(bloque[:, :, 1])
-    suma_b = np.sum(bloque[:, :, 2])
-    #cantidad de pixeles en el bloque
-    cantidad_pixeles = bloque.shape[0] * bloque.shape[1]
-    #calcular promedios
-    prom_r = int(suma_r / cantidad_pixeles)
-    prom_g = int(suma_g / cantidad_pixeles)
-    prom_b = int(suma_b / cantidad_pixeles)
+    #si el bloque esta vacio, devuelve negro
+    if bloque.size == 0:
+        return np.array([0, 0, 0])
+    #calculo promedio de cada canal usando mean
+    prom_r = int(np.mean(bloque[:, :, 0]))
+    prom_g = int(np.mean(bloque[:, :, 1]))
+    prom_b = int(np.mean(bloque[:, :, 2]))
     return np.array([prom_r, prom_g, prom_b])
 
 
@@ -73,6 +70,7 @@ def aplicar_pixel_art(ruta_imagen: str, tam_bloque: int, niveles_color: int):
     
     #abre la imagen
     imagen = Image.open(ruta_imagen)
+    imagen = imagen.convert('RGB') #fuerza a la imagen a tener unicamente tres canales
     img_array = np.array(imagen)
     alto, ancho = img_array.shape[:2]
     paleta = crear_paleta(niveles_color) 
