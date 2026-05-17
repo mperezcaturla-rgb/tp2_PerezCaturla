@@ -30,4 +30,18 @@ if metodo == 'ascii':
     print("Archivo guardado en archivos/resultado.txt")
 
 elif metodo == 'pixel':
-    pass #LLENA MILO ACA
+    tam_bloque=input('Ingrese el tamaño de bloque de píxeles deseado: ')
+    if tam_bloque=='':
+        tam_bloque=10
+    else:
+        tam_bloque=int(tam_bloque)
+    
+    niveles_color=input('Ingrese los niveles de color deseados: ')
+    if niveles_color=='':
+        niveles_color=4
+    else:
+        niveles_color=int(niveles_color)
+    
+    resultado=aplicar_pixel_art(imagen, tam_bloque, niveles_color)
+    resultado.show()
+    
