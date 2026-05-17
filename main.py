@@ -1,6 +1,8 @@
 from ascii_art import convertir_ascii
 from ascii_art import guardar_ascii_art
+from pixelart import aplicar_pixel_art
 import os
+import PIL
 
 imagen = input("Ingrese la ruta de la imagen: ")
 if not os.path.exists(imagen):
