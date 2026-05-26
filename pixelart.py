@@ -14,8 +14,7 @@ def extraer_bloque(img_array: np.ndarray, x:int, y:int, tamaño_bloque:int) -> n
     '''Crea los bloques de pixeles.
     Recibe la matriz de la imagen, las coordenadas xy y el tamaño deseado de cada bloque.
     Devuelve un array con la matriz seccionada. '''
-    alto=len(img_array)
-    ancho=len(img_array[0])
+    alto, ancho = img_array.shape[:2]
     #calcula los limites sin salirse de la foto
     x_fin=min(x+tamaño_bloque, ancho)
     y_fin=min(y+tamaño_bloque, alto)
